@@ -269,8 +269,8 @@ Members:
 
 ---
 
-# 📜 License
+## 📜 License
 
-This project is developed for the hackathon demonstration.
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0).
 
-MIT License.
+See the LICENSE file for details.
