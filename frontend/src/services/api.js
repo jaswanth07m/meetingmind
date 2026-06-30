@@ -34,7 +34,7 @@ export function health() {
 
 export function upload(file, onProgress) {
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append('audio', file);
 
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();

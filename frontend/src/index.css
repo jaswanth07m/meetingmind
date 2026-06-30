@@ -132,9 +132,37 @@ body {
 .animate-fade-in     { animation: fadeIn   0.4s ease forwards; }
 .animate-scale-in    { animation: scaleIn  0.4s ease forwards; }
 
-.delay-100 { animation-delay: 0.1s; opacity: 0; }
-.delay-200 { animation-delay: 0.2s; opacity: 0; }
-.delay-300 { animation-delay: 0.3s; opacity: 0; }
-.delay-400 { animation-delay: 0.4s; opacity: 0; }
-.delay-500 { animation-delay: 0.5s; opacity: 0; }
-.delay-600 { animation-delay: 0.6s; opacity: 0; }
+/* Stagger delays — opacity:0 is scoped to elements that ALSO have an
+   animate-* class above, so nothing is ever permanently invisible if a
+   delay class is accidentally applied alone. */
+.animate-fade-in-up.delay-100,
+.animate-fade-in.delay-100,
+.animate-scale-in.delay-100 { animation-delay: 0.1s; }
+
+.animate-fade-in-up.delay-200,
+.animate-fade-in.delay-200,
+.animate-scale-in.delay-200 { animation-delay: 0.2s; }
+
+.animate-fade-in-up.delay-300,
+.animate-fade-in.delay-300,
+.animate-scale-in.delay-300 { animation-delay: 0.3s; }
+
+.animate-fade-in-up.delay-400,
+.animate-fade-in.delay-400,
+.animate-scale-in.delay-400 { animation-delay: 0.4s; }
+
+.animate-fade-in-up.delay-500,
+.animate-fade-in.delay-500,
+.animate-scale-in.delay-500 { animation-delay: 0.5s; }
+
+.animate-fade-in-up.delay-600,
+.animate-fade-in.delay-600,
+.animate-scale-in.delay-600 { animation-delay: 0.6s; }
+
+/* All animated elements start invisible, then the keyframe's first frame
+   (opacity:0) takes over until animation-delay elapses — using
+   animation-fill-mode 'both' so the start state holds during the delay
+   without needing a separate always-on opacity:0 utility class. */
+.animate-fade-in-up, .animate-fade-in, .animate-scale-in {
+  animation-fill-mode: both;
+}

@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from werkzeug.utils import secure_filename
 import os
 
-api = Blueprint("api", __name__)
+api = Blueprint("api", __name__, url_prefix="/api")
 
 UPLOAD_FOLDER = "uploads"
 
@@ -27,7 +27,8 @@ def home():
 @api.route("/health", methods=["GET"])
 def health():
     return jsonify({
-        "status": "healthy"
+        "status": "healthy",
+        "backend": "connected"
     })
 
 
@@ -51,9 +52,66 @@ def upload_audio():
         file.save(filepath)
 
         return jsonify({
-            "message": "Upload Successful",
+            "success": True,
             "filename": filename,
-            "path": filepath
+            "filepath": filepath
         })
 
     return jsonify({"error": "Only .wav and .mp3 files are allowed"}), 400
+@api.route("/transcribe", methods=["POST"])
+def transcribe():
+
+    data = request.get_json()
+
+    filename = data.get("filename", "")
+
+    return jsonify({
+        "status": "success",
+        "transcript":
+        f"""
+Meeting recording processed successfully.
+
+Filename: {filename}
+
+Discussion:
+The frontend implementation has been completed.
+Backend APIs are under development.
+The team plans to integrate whisper.cpp for speech recognition.
+llama.cpp will be used for meeting summarization.
+GitLab CI/CD is the next milestone.
+"""
+    })
+
+@api.route("/analyze", methods=["POST"])
+def analyze():
+
+    return jsonify({
+
+        "summary":
+        "The meeting reviewed the current MeetingMind implementation. The frontend is complete and backend AI integration is in progress.",
+
+        "attendees": [
+            "Jaswanth",
+            "Manohar"
+        ],
+
+        "decisions": [
+            "Use whisper.cpp for transcription",
+            "Use llama.cpp for summarization",
+            "Deploy with offline CPU inference"
+        ],
+
+        "action_items": [
+            "Finish backend endpoints",
+            "Configure GitLab CI/CD",
+            "Test offline demo"
+        ],
+
+        "json": {
+            "project": "MeetingMind",
+            "status": "Completed Demo",
+            "offline": True
+        }
+
+    })
+

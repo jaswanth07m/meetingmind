@@ -6,6 +6,7 @@ import UploadPage          from './pages/UploadPage';
 import ResultsPage         from './pages/ResultsPage';
 import ProcessingAnimation from './components/ProcessingAnimation';
 import { useMeeting }      from './hooks/useMeeting';
+import './index.css'
 
 /**
  * App — top-level flow controller.
@@ -63,7 +64,7 @@ export default function App() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      <main className="flex-1">
+      <main className="flex-1 pt-16">
         {page === 'landing' && (
           <LandingPage onUploadClick={handleUploadClick} />
         )}

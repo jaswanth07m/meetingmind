@@ -42,7 +42,7 @@ export default function LandingPage({ onUploadClick }) {
         </p>
 
         {/* ── CTA ──────────────────────────────────────────────────────── */}
-        <div className="animate-fade-in-up delay-300 flex flex-col sm:flex-row items-center justify-center gap-3 mb-16">
+        <div className="animate-fade-in-up delay-300 flex flex-col items-center gap-4 mb-16">
           <button
             onClick={onUploadClick}
             className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl
@@ -59,8 +59,6 @@ export default function LandingPage({ onUploadClick }) {
             </svg>
             Upload a Recording
           </button>
-
-          <span className="text-slate-600 text-sm hidden sm:inline">—</span>
 
           <p className="text-slate-500 text-sm">
             MP3 or WAV · runs 100% on your CPU

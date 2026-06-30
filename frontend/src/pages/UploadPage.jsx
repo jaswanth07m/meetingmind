@@ -5,7 +5,7 @@ export default function UploadPage({ onProcess, onBack }) {
   const [selectedFile, setSelectedFile] = useState(null);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 pt-24 pb-16">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 pt-24 pb-16">
       <div className="w-full max-w-xl mx-auto">
 
         {/* ── Back link ── */}

@@ -25,11 +25,11 @@ export default function ResultsPage({ data, onReset }) {
     : null;
 
   return (
-    <div className="min-h-screen px-4 pt-24 pb-16">
+    <div className="min-h-screen px-4 sm:px-6 lg:px-8 pt-24 pb-20">
       <div className="max-w-4xl mx-auto">
 
         {/* ── Page header ── */}
-        <div className="text-center mb-10 animate-fade-in">
+        <div className="text-center mb-12 animate-fade-in">
           {/* success icon */}
           <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20
             flex items-center justify-center mx-auto mb-4">
@@ -55,7 +55,7 @@ export default function ResultsPage({ data, onReset }) {
         </div>
 
         {/* ── Action bar ── */}
-        <div className="flex flex-col sm:flex-row gap-3 mb-8 animate-fade-in-up delay-100">
+        <div className="flex flex-col sm:flex-row gap-3 mb-10 animate-fade-in-up delay-100">
           {/* Download JSON */}
           <button
             onClick={handleDownload}
@@ -90,14 +90,14 @@ export default function ResultsPage({ data, onReset }) {
         </div>
 
         {/* ── Results grid ── */}
-        <div className="space-y-5">
+        <div className="space-y-6">
           {/* Summary — most important, first */}
           <div className="animate-fade-in-up delay-200">
             <SummaryCard summary={data?.summary} />
           </div>
 
           {/* Attendees + Decisions — side by side */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-fade-in-up delay-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up delay-300">
             <AttendeeCard attendees={data?.attendees} />
             <DecisionCard decisions={data?.decisions} />
           </div>
@@ -119,7 +119,7 @@ export default function ResultsPage({ data, onReset }) {
         </div>
 
         {/* ── Bottom CTA ── */}
-        <div className="mt-10 text-center animate-fade-in-up delay-600">
+        <div className="mt-12 text-center animate-fade-in-up delay-600">
           <button
             onClick={onReset}
             className="inline-flex items-center gap-2 text-slate-500 hover:text-cyan-400 text-sm transition-colors duration-200"
