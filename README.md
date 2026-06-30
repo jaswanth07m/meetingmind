@@ -6,6 +6,16 @@ MeetingMind is an offline-first AI application that converts meeting recordings 
 
 ---
 
+
+## Live Demo
+
+🌐 Frontend: https://meetingmind-sepia.vercel.app
+
+⚙️ Backend: https://meetingmind-backend-j9m5.onrender.com
+
+Status: ✅ Deployed
+
+
 ## 🚀 Overview
 
 Meetings often produce valuable information, but manually taking notes, tracking decisions, and assigning tasks is time-consuming and error-prone.
