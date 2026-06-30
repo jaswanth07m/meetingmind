@@ -19,3 +19,6 @@ frontend/dist/
 # OS files
 .DS_Store
 Thumbs.db
+
+backend/uploads/
+backend/__pycache__/
