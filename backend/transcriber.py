@@ -26,7 +26,7 @@ def _load_model() -> WhisperModel:
     if os.path.isdir(_MODEL_DIR):
         # ── Fully offline: load from pre-downloaded local directory ──────
         return WhisperModel(
-            "small",
+            _MODEL_DIR,
             device="cpu",
             compute_type="int8",
             local_files_only=True,
@@ -40,7 +40,7 @@ def _load_model() -> WhisperModel:
     print("[transcriber] Attempting online download (requires internet)...")
     try:
         return WhisperModel(
-            "small",
+            _MODEL_DIR,
             device="cpu",
             compute_type="int8",
         )
