@@ -10,27 +10,27 @@
 
 const VARIANTS = {
   success: {
-    pill: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
-    dot:  'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)]',
+    pill: 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300',
+    dot:  'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]',
   },
   warning: {
-    pill: 'bg-amber-500/10 border-amber-500/20 text-amber-400',
-    dot:  'bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.6)]',
+    pill: 'bg-amber-500/10 border-amber-500/25 text-amber-300',
+    dot:  'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.7)]',
   },
   error: {
-    pill: 'bg-red-500/10 border-red-500/20 text-red-400',
-    dot:  'bg-red-400 shadow-[0_0_6px_rgba(248,113,113,0.6)]',
+    pill: 'bg-red-500/10 border-red-500/25 text-red-300',
+    dot:  'bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.7)]',
   },
   info: {
-    pill: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400',
-    dot:  'bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.6)]',
+    pill: 'bg-cyan-500/10 border-cyan-500/25 text-cyan-300',
+    dot:  'bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.7)]',
   },
   pending: {
-    pill: 'bg-slate-700/50 border-slate-600/30 text-slate-400',
+    pill: 'bg-slate-700/40 border-slate-600/40 text-slate-300',
     dot:  'bg-slate-400',
   },
   offline: {
-    pill: 'bg-slate-800/50 border-slate-700/30 text-slate-500',
+    pill: 'bg-slate-800/50 border-slate-700/40 text-slate-500',
     dot:  'bg-slate-600',
   },
 };
@@ -54,7 +54,8 @@ export default function StatusBadge({
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border font-medium
+      className={`inline-flex items-center gap-1.5 rounded-full border font-medium tracking-tight
+        backdrop-blur-sm max-w-full truncate
         ${styles.pill} ${sizeClasses[size]} ${className}`}
     >
       {dot && (

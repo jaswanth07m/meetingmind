@@ -26,7 +26,7 @@ def _load_model() -> WhisperModel:
     if os.path.isdir(_MODEL_DIR):
         # ── Fully offline: load from pre-downloaded local directory ──────
         return WhisperModel(
-            _MODEL_DIR,
+            "small",
             device="cpu",
             compute_type="int8",
             local_files_only=True,
@@ -40,7 +40,7 @@ def _load_model() -> WhisperModel:
     print("[transcriber] Attempting online download (requires internet)...")
     try:
         return WhisperModel(
-            _MODEL_SIZE,
+            "small",
             device="cpu",
             compute_type="int8",
         )
@@ -90,6 +90,7 @@ def transcribe(audio_path: str) -> dict:
         vad_parameters={
             "min_silence_duration_ms": 500,
         },
+        condition_on_previous_text=True
     )
 
     segments = []

@@ -22,13 +22,13 @@ export default function AttendeeCard({ attendees = [] }) {
   ];
 
   return (
-    <div className="glass-card p-5 sm:p-6">
+    <div className="glass-card h-full flex flex-col p-5 sm:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/10 border border-blue-500/20 flex items-center justify-center">
             <svg
-              className="w-4 h-4 text-blue-400"
+              className="w-4.5 h-4.5 text-blue-300"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -44,7 +44,7 @@ export default function AttendeeCard({ attendees = [] }) {
           <h3 className="text-white font-semibold">Attendees</h3>
         </div>
         {attendees.length > 0 && (
-          <span className="text-xs text-slate-500 bg-slate-800/50 px-2 py-1 rounded-full border border-slate-700/50">
+          <span className="text-xs text-slate-400 bg-slate-800/60 px-2.5 py-1 rounded-full border border-slate-700/50">
             {attendees.length} {attendees.length === 1 ? 'person' : 'people'}
           </span>
         )}
@@ -52,28 +52,28 @@ export default function AttendeeCard({ attendees = [] }) {
 
       {/* Content */}
       {attendees.length > 0 ? (
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-2.5">
           {attendees.map((name, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/30 transition-colors duration-200"
+              className="group flex items-center gap-2.5 pl-1.5 pr-3.5 py-1.5 rounded-full bg-slate-800/50 border border-slate-700/50 hover:border-blue-400/40 hover:bg-slate-800/80 transition-all duration-200"
             >
               {/* Avatar */}
               <div
-                className={`w-7 h-7 rounded-lg bg-gradient-to-br ${colors[idx % colors.length]} flex items-center justify-center flex-shrink-0`}
+                className={`w-7 h-7 rounded-full bg-gradient-to-br ${colors[idx % colors.length]} flex items-center justify-center flex-shrink-0 ring-2 ring-slate-900/40 group-hover:scale-105 transition-transform duration-200`}
               >
                 <span className="text-white text-xs font-bold leading-none">
                   {initials(name)}
                 </span>
               </div>
-              <span className="text-sm text-slate-300 font-medium">{name}</span>
+              <span className="text-sm text-slate-200 font-medium">{name}</span>
             </div>
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-6 gap-2">
+        <div className="flex-1 flex flex-col items-center justify-center py-8 gap-2">
           <svg
-            className="w-8 h-8 text-slate-700"
+            className="w-9 h-9 text-slate-700"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

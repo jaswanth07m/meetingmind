@@ -22,7 +22,7 @@ async function request(endpoint, options = {}) {
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ message: 'Request failed' }));
-    throw new Error(error.message || `HTTP ${response.status}`);
+    throw new Error(error.error || error.message || `HTTP ${response.status}`);
   }
 
   return response.json();
@@ -34,7 +34,7 @@ export function health() {
 
 export function upload(file, onProgress) {
   const formData = new FormData();
-  formData.append('audio', file);
+  formData.append('file', file);
 
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -52,7 +52,7 @@ export function upload(file, onProgress) {
       } else {
         try {
           const error = JSON.parse(xhr.responseText);
-          reject(new Error(error.message || `HTTP ${xhr.status}`));
+          reject(new Error(error.error || error.message || `HTTP ${xhr.status}`));
         } catch {
           reject(new Error(`Upload failed: HTTP ${xhr.status}`));
         }
