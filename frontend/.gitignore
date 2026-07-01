@@ -18,7 +18,7 @@ backend/__pycache__/
 node_modules/
 dist/
 .env
-
+backend/models/
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
