@@ -1,231 +1,297 @@
 # 🎙️ MeetingMind
 
-**Offline AI-Powered Meeting Transcriber & Action Extractor**
+# Offline AI-Powered Meeting Transcriber & Action Extractor
 
-MeetingMind is an offline-first AI application that converts meeting recordings into structured, actionable insights. It transcribes audio, summarizes discussions, identifies attendees, extracts key decisions, and generates action items with assigned owners—all without requiring an internet connection.
+MeetingMind is an offline-first, CPU-powered AI application that converts meeting recordings into structured, actionable insights.
 
----
-
-
-## Live Demo
-
-🌐 Frontend: https://meetingmind-sepia.vercel.app
-
-⚙️ Backend: https://meetingmind-backend-j9m5.onrender.com
-
-Status: ✅ Deployed
-
-
-## 🚀 Overview
-
-Meetings often produce valuable information, but manually taking notes, tracking decisions, and assigning tasks is time-consuming and error-prone.
-
-MeetingMind automates this entire workflow by processing meeting recordings locally on the user's device, ensuring complete privacy while delivering structured outputs that are easy to store, search, and integrate into other systems.
+It transcribes audio, summarizes discussions, identifies attendees, extracts key decisions, and generates action items—all while running entirely on your own machine without relying on cloud AI services.
 
 ---
 
-## ❗ Problem Statement
+# 🌐 Live Demo
 
-Organizations spend countless hours documenting meetings. Existing cloud-based transcription services introduce concerns regarding:
+### Frontend (Vercel)
 
-* Data privacy
-* Internet dependency
-* Subscription costs
-* Delayed processing
+https://meetingmind-sepia.vercel.app
 
-There is a need for an offline solution that can accurately transcribe meetings and automatically organize important information into structured data.
+### Backend (Render)
+
+https://meetingmind-backend-j9m5.onrender.com
+
+**Status:** ✅ Deployed
 
 ---
 
-## 💡 Solution
+# 🚀 Overview
 
-MeetingMind provides an end-to-end offline AI pipeline:
+Meetings often produce valuable information, but manually documenting discussions, assigning tasks, and tracking decisions is tedious and error-prone.
 
-1. Upload a meeting recording (.wav or .mp3)
-2. Convert speech to text using **whisper.cpp**
-3. Process the transcript using a **GGUF Small Language Model**
-4. Extract:
+MeetingMind automates this workflow using local AI models running on the CPU. It transforms meeting recordings into structured information while keeping user data private.
 
-   * Meeting summary
-   * Attendees
-   * Key decisions
-   * Action items
-   * Responsible owners
-5. Store structured results in SQLite
-6. Export the final output as JSON
+The application supports:
 
-Everything runs locally on CPU without internet access.
+- Online deployment using the hosted backend
+- Offline processing using a local backend
+- Progressive Web App (PWA) installation
+
+---
+
+# ❗ Problem Statement
+
+Existing meeting transcription platforms often depend on cloud services, resulting in:
+
+- Privacy concerns
+- Internet dependency
+- Subscription costs
+- Vendor lock-in
+- High latency
+
+Organizations need a solution that keeps sensitive meeting data on-device while producing structured outputs automatically.
+
+---
+
+# 💡 Solution
+
+MeetingMind provides an end-to-end AI pipeline:
+
+1. Upload a meeting recording (.wav/.mp3)
+2. Transcribe speech using Faster Whisper (Whisper Tiny)
+3. Analyze the transcript using Python NLP
+4. Generate:
+
+   - Meeting summary
+   - Attendees
+   - Key decisions
+   - Action items
+
+5. Export structured JSON
+
+No cloud AI APIs are used.
 
 ---
 
 # ✨ Features
 
-* 🎤 Offline speech-to-text transcription
-* 🧠 AI-generated meeting summaries
-* 👥 Automatic attendee extraction
-* ✅ Decision detection
-* 📌 Action item extraction
-* 🙋 Owner assignment
-* 📄 Structured JSON output
-* 💾 SQLite storage
-* 🔒 Privacy-first architecture
-* 🌐 No internet required
+- 🎤 Offline speech-to-text transcription
+- 🧠 AI-generated meeting summaries
+- 👥 Automatic attendee extraction
+- ✅ Decision detection
+- 📌 Action item extraction
+- 📄 Structured JSON output
+- ⚡ CPU-only inference
+- 🌐 Progressive Web App (PWA)
+- 🔒 Privacy-first architecture
+- 🔁 Automatic Localhost → Render backend fallback
 
 ---
 
 # 🏗 Architecture
 
 ```text
-Meeting Audio (.wav/.mp3)
+                 Meeting Audio
+                      │
+                      ▼
+              React + Vite PWA
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+          ▼                       ▼
+ localhost:5000          Render Backend
           │
           ▼
-    whisper.cpp
-(Audio → Transcript)
+      Flask Backend
           │
           ▼
- GGUF Small Language Model
+ Faster Whisper (CPU)
           │
-          ├─────────────┐
-          │             │
-          ▼             ▼
-Meeting Summary    Named Entity Recognition
-          │             │
-          └──────┬──────┘
-                 ▼
-      Decision & Action Extraction
-                 │
-                 ▼
-          Structured JSON
-                 │
-                 ▼
-             SQLite Database
+          ▼
+     Transcript
+          │
+          ▼
+      Python NLP
+          │
+  ┌───────┴────────┐
+  │                │
+  ▼                ▼
+Summary      Attendees
+  │
+  ▼
+Action Items + Decisions
+  │
+  ▼
+ Structured JSON
 ```
 
 ---
 
 # 🛠 Tech Stack
 
-## AI Models
+## Frontend
 
-* whisper.cpp
-* GGUF Small Language Model
+- React
+- Vite
+- Tailwind CSS
+- React Router
+- vite-plugin-pwa
 
 ## Backend
 
-* Python
+- Python
+- Flask
 
-## Database
+## AI
 
-* SQLite
+- Faster Whisper (Whisper Tiny)
+- NLTK
+- Sumy
 
-## Data Format
+## Deployment
 
-* JSON
+- Vercel
+- Render
 
-## Audio Processing
+## CI/CD
 
-* WAV
-* MP3
+- GitLab CI
+- GitLab Runner
+- Docker
 
 ---
 
 # 📂 Project Structure
 
 ```text
-MeetingMind/
+MeetingMind
 │
-├── app/
+├── frontend/
+│
+├── backend/
+│   ├── analyzer.py
+│   ├── app.py
+│   ├── routes.py
 │   ├── transcriber.py
-│   ├── extractor.py
-│   ├── summarizer.py
-│   ├── database.py
-│   └── main.py
+│   ├── setup_models.py
+│   ├── requirements.txt
+│   ├── uploads/
+│   └── models/
 │
-├── models/
-│   ├── whisper.cpp/
-│   └── gguf-model/
+├── specs/
 │
-├── database/
-│   └── meetings.db
+├── .gitlab-ci.yml
 │
-├── samples/
-│   └── sample_meeting.wav
-│
-├── output/
-│   ├── transcript.txt
-│   ├── summary.json
-│   └── actions.json
-│
-├── requirements.txt
-└── README.md
+├── README.md
+├── CONTRIBUTING.md
+├── CHANGELOG.md
+└── LICENSE
 ```
 
 ---
 
 # ⚙️ Installation
 
-Clone the repository
+## Clone Repository
 
 ```bash
-git clone https://github.com/your-username/MeetingMind.git
+git clone <repository-url>
 
 cd MeetingMind
 ```
 
-Install dependencies
+---
+
+## Backend
 
 ```bash
+cd backend
+
 pip install -r requirements.txt
+
+python setup_models.py
+
+python app.py
 ```
 
-Download the required Whisper and GGUF models and place them inside the `models/` directory.
+---
 
-Run the application
+## Frontend
 
 ```bash
-python app/main.py
+cd frontend
+
+npm install
+
+npm run build
+
+npm run preview
 ```
+
+---
+
+# 📶 Offline Usage
+
+MeetingMind is designed to support offline AI processing.
+
+## Start Backend
+
+```bash
+cd backend
+
+python app.py
+```
+
+## Start Frontend
+
+```bash
+cd frontend
+
+npm run build
+
+npm run preview
+```
+
+Install the PWA.
+
+Disconnect Wi-Fi.
+
+Launch the installed application.
+
+Upload a meeting recording.
+
+All AI inference runs locally on the CPU.
+
+If a local backend is available, the frontend automatically connects to it.
+
+Otherwise it falls back to the deployed Render backend.
 
 ---
 
 # 📥 Input
 
-Supported formats:
+Supported formats
 
-* .wav
-* .mp3
-
-Example
-
-```text
-meeting.wav
-```
+- WAV
+- MP3
 
 ---
 
 # 📤 Output
 
-Example JSON
+Example
 
 ```json
 {
-  "summary": "Discussed Q3 product roadmap and deployment timeline.",
+  "summary": "Project timeline discussed.",
   "attendees": [
     "Alice",
-    "Bob",
-    "Charlie"
+    "Bob"
   ],
   "decisions": [
-    "Launch postponed to next Friday."
+    "Deploy next Friday."
   ],
   "action_items": [
     {
       "task": "Prepare deployment checklist",
       "owner": "Bob"
-    },
-    {
-      "task": "Update project documentation",
-      "owner": "Alice"
     }
   ]
 }
@@ -233,54 +299,76 @@ Example JSON
 
 ---
 
-# 🎯 Future Scope
+# 🧠 CPU-First Design
 
-* Speaker diarization
-* Multi-language transcription
-* Calendar integration
-* PDF meeting reports
-* Email action-item delivery
-* Searchable meeting history
-* Meeting analytics dashboard
+MeetingMind is built specifically for CPU inference.
+
+It uses:
+
+- Faster Whisper Tiny
+- Python NLP
+- NLTK
+- Sumy
+
+No GPU or CUDA is required.
+
+No cloud AI inference is used.
 
 ---
 
 # 🔒 Privacy
 
-MeetingMind is designed with privacy as its highest priority.
+MeetingMind follows a privacy-first architecture.
 
-* No internet connection required
-* No cloud uploads
-* All processing happens locally
-* Complete ownership of meeting data
+- Audio never leaves your machine when using the local backend.
+- No OpenAI API.
+- No cloud LLMs.
+- No third-party AI services.
+- Local CPU inference.
 
 ---
 
 # 🏆 Hackathon Highlights
 
-* Fully Offline AI Pipeline
-* CPU-Optimized Inference
-* End-to-End Local Processing
-* Automatic Knowledge Extraction
-* Real-World Business Use Case
+- ✅ CPU-first inference
+- ✅ Offline-first architecture
+- ✅ Progressive Web App
+- ✅ Local AI processing
+- ✅ Faster Whisper transcription
+- ✅ Meeting summarization
+- ✅ Action item extraction
+- ✅ Decision detection
+- ✅ GitLab CI/CD (10+ real checks)
+- ✅ GPL-3.0 Open Source
+
+---
+
+# 🚀 Future Scope
+
+- Speaker diarization
+- Multi-language transcription
+- Calendar integration
+- PDF meeting reports
+- Email action-item delivery
+- Searchable meeting history
+- Browser-side Whisper inference
+- Fully offline browser inference without a local backend
 
 ---
 
 # 👥 Team
 
-**Team Name:** *[Your Team Name]*
+**Team Name:** MeetingMind
 
 Members:
 
-* Member 1
-* Member 2
-* Member 3
-* Member 4
+- Jaswanth Mucherla
+- (Add remaining members)
 
 ---
 
-## 📜 License
+# 📜 License
 
 This project is licensed under the GNU General Public License v3.0 (GPL-3.0).
 
-See the LICENSE file for details.
+See the LICENSE file for complete license information.

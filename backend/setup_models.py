@@ -61,3 +61,4 @@ if __name__ == "__main__":
     print("=" * 40)
     print("Setup complete. You can now run the backend offline.")
     print("  python app.py")
+    

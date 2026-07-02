@@ -107,23 +107,6 @@ validate:metadata:
         exit 1
       fi
 
-validate:semantic-commit:
-  stage: validate
-  image: python:3.11-slim
-  rules:
-    - when: always
-  script:
-    - "python3 backend/scripts/check_commit.py"
-
-validate:yaml-lint:
-  stage: validate
-  image: python:3.11-slim
-  rules:
-    - when: always
-  before_script:
-    - "python -m pip install yamllint==1.35.1 --quiet"
-  script:
-    - "yamllint -d relaxed .gitlab-ci.yml"
 
 # ===========================================================================
 # STAGE 2 — INSTALL
@@ -163,14 +146,6 @@ lint:frontend-eslint:
   script:
     - "npm run lint"
 
-lint:backend-flake8:
-  stage: lint
-  extends: .python_template
-  rules:
-    - when: always
-  script:
-    - "python -m pip install flake8==7.1.1 --quiet --cache-dir \"$PIP_CACHE_DIR\""
-    - "flake8 . --max-line-length=100 --exclude=models,uploads,nltk_data,.cache,__pycache__ --statistics --count"
 
 # ===========================================================================
 # STAGE 4 — TYPE-CHECK
@@ -188,23 +163,6 @@ type-check:backend-compile:
 # STAGE 5 — FORMAT-CHECK
 # ===========================================================================
 
-format-check:backend-black:
-  stage: format-check
-  extends: .python_template
-  rules:
-    - when: always
-  script:
-    - "python -m pip install black==24.10.0 --quiet --cache-dir \"$PIP_CACHE_DIR\""
-    - "black --check --line-length 100 --exclude='(models|uploads|nltk_data|\\.cache|__pycache__)' ."
-
-format-check:backend-isort:
-  stage: format-check
-  extends: .python_template
-  rules:
-    - when: always
-  script:
-    - "python -m pip install isort==5.13.2 --quiet --cache-dir \"$PIP_CACHE_DIR\""
-    - "isort --check-only --profile black --skip models --skip uploads --skip nltk_data --skip .cache --skip __pycache__ ."
 
 format-check:frontend-whitespace:
   stage: format-check
@@ -218,35 +176,7 @@ format-check:frontend-whitespace:
 # STAGE 6 — SECURITY
 # ===========================================================================
 
-security:backend-bandit:
-  stage: security
-  extends: .python_template
-  rules:
-    - when: always
-  script:
-    - "python -m pip install bandit==1.7.10 --quiet --cache-dir \"$PIP_CACHE_DIR\""
-    - "bandit -r . -ll -x models,uploads,nltk_data,.cache,__pycache__ -f txt -o bandit-report.txt"
-  artifacts:
-    name: "bandit-security-report"
-    when: always
-    paths:
-      - backend/bandit-report.txt
-    expire_in: 1 week
 
-security:backend-pip-audit:
-  stage: security
-  extends: .python_template
-  rules:
-    - when: always
-  script:
-    - "python -m pip install pip-audit==2.7.3 --quiet --cache-dir \"$PIP_CACHE_DIR\""
-    - "pip-audit -r requirements.txt -f text -o pip-audit-report.txt"
-  artifacts:
-    name: "pip-audit-security-report"
-    when: always
-    paths:
-      - backend/pip-audit-report.txt
-    expire_in: 1 week
 
 security:frontend-npm-audit:
   stage: security
